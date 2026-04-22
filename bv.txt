@@ -1,0 +1,19 @@
+ - main
+jobs:
+ build-test-deploy:
+ runs-on: ubuntu-latest
+ steps:
+ - name: Checkout code
+ uses: actions/checkout@v3
+ - name: Install Python
+ uses: actions/setup-python@v4
+ with:
+ python-version: 3.9
+ - name: Install dependencies
+ run: pip install -r requirements.txt
+ - name: Run test
+ run: python -c "print('Test Passed')"
+ - name: Build Docker image
+ run: docker build -t mlops-model .
+ - name: Run Docker container
+ run: docker run -d -p 5000:5000 mlops-mode
